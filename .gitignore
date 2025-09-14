@@ -1,0 +1,26 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio cache/options
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio indexes
+*.vsidx
+
+# Other cache
+*.cache
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+
+# Rider / JetBrains (if you use)
+.idea/
