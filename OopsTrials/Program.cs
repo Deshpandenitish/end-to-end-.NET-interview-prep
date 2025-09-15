@@ -332,6 +332,34 @@ namespace OopsTrials
             }
             Console.WriteLine();
             #endregion
+
+            #region Employees Without Any Department (Left Join)
+            Console.WriteLine("Employees Without Any Department (Left Join)");
+            Console.WriteLine("-------------------------------------------------------");
+            if (syntax.ToUpper() == "Y")
+            {
+                var empWithoutDepts = from e in lstEmployees
+                                      join d in Departments on e.DeptId equals d.DeptId into empGroup
+                                      from d in empGroup.DefaultIfEmpty()
+                                      where d == null
+                                      select e;
+                foreach (var emp in empWithoutDepts)
+                    Console.WriteLine($"{emp} does not belong to any department.");
+            }
+            else
+            {
+                var empWithoutDepts = from e in lstEmployees
+                                      join d in Departments on e.DeptId equals d.DeptId into ed
+                                      from d in ed.DefaultIfEmpty()
+                                      where d is null
+                                      select e;
+
+                foreach (var emp in empWithoutDepts)
+                    Console.WriteLine($"{emp} does not belong to any department.");
+            }
+
+            Console.WriteLine();
+            #endregion
             #endregion
         }
         static void Main(string[] args)
