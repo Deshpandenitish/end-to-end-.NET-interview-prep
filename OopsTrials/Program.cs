@@ -113,6 +113,22 @@ namespace OopsTrials
     }
     #endregion
 
+    #region SOLID Principles Practices
+
+    #region Liskov Substitution Principle(LSP)
+    public abstract class Bird { public string Name { get; set; } = string.Empty; }
+    public interface IFlyable { void Fly(); }
+    public class Sparrow: Bird, IFlyable
+    {
+        void IFlyable.Fly() { }
+    }
+    #endregion
+
+    #region Open for Extension Closed for Modification Principle(OCP)
+
+    #endregion
+    #endregion
+
     internal class Program
     {
         static void RunQueries(string syntax)
@@ -362,6 +378,7 @@ namespace OopsTrials
             #endregion
             #endregion
         }
+
         static void Main(string[] args)
         {
             Account Savings = new SavingsAccount("SAV123", 100000);
