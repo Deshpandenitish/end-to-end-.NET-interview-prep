@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
+﻿using OopsTrials.DTO;
+using OopsTrials.Extensions;
 
 namespace OopsTrials
 {
@@ -97,22 +97,6 @@ namespace OopsTrials
     #endregion
     #endregion
 
-    #region Linq
-    public class Department
-    {
-        public int DeptId { get; set; }
-        public string DeptName { get; set; } = string.Empty;
-    }
-    public class Employees
-    {
-        public int EmpId { get; set; }
-        public string EmployeeName { get; set; } = string.Empty;
-        public decimal salary { get; set; }
-        public int DeptId { get; set; }
-        public List<string> Skills { get; set; } = new List<string>();
-    }
-    #endregion
-
     #region SOLID Principles Practices
 
     #region Liskov Substitution Principle(LSP)
@@ -127,6 +111,14 @@ namespace OopsTrials
     #region Open for Extension Closed for Modification Principle(OCP)
 
     #endregion
+    #endregion
+
+    #region Scalable and Efficient Linq Filter Using Expression Predicates
+
+    #endregion
+
+    #region Scalable and Efficient Linq Filter using Dictionary
+
     #endregion
 
     internal class Program
@@ -392,6 +384,26 @@ namespace OopsTrials
             Console.Write("Run Linq on Query Syntax?(Y/N) :");
             var syntax = Console.ReadLine();
             RunQueries(syntax ?? "N");
+
+            Console.Write("Run Prdicate Query Filter(Y/N) :");
+            var lstEmployees = new List<Employees> {
+                new Employees { EmpId = 101, EmployeeName = "Harish", DeptId = 1, salary = 100000, Skills = new List<string> { "Communication","Recruitment" } },
+                new Employees { EmpId = 102, EmployeeName = "Nitish", DeptId = 2, salary = 200000, Skills = new List<string> { "C#","Azure" } },
+                new Employees { EmpId = 103, EmployeeName = "Shreesh", DeptId = 2, salary = 50000, Skills = new List<string> { "JavaScript","React","C#"} },
+                new Employees { EmpId = 104, EmployeeName = "Rutwik", DeptId = 3, salary = 100000, Skills = new List<string> { "Excel","SAP" } },
+                new Employees { EmpId = 105, EmployeeName = "Hrishikesh", DeptId = 1, salary = 50000, Skills = new List<string> { "Policy Making" } },
+            };
+            var filt = Console.ReadLine();
+            var EmployeeFilter = new EmployeeFilter()
+            {
+                salary = 100000m,
+            };
+            var filteredEmployees = lstEmployees.AsQueryable().ApplyFiltersPredicate(EmployeeFilter);
+            foreach (var employee in filteredEmployees)
+            {
+                Console.WriteLine($"Name :{employee.EmployeeName}, Salary :{employee.salary}, " +
+                    $"Skills :{string.Join(",", employee.Skills)}");
+            }
         }
     }
 }
