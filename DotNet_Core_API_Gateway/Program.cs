@@ -1,23 +1,29 @@
-using Microsoft.EntityFrameworkCore;
+using DotNet_Prep.Caching.Memory.Extensions;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
-namespace DotNet_Core_Prep_Samples
+namespace DotNet_Core_API_Gateway
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            #region Register Ocelot
             // Add services to the container.
+            builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            // Register Ocelot
+            builder.Services.AddOcelot(builder.Configuration);
+
+            //Register Memory Cache
+            builder.Services.AddMemoryCacheService();
+            #endregion
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddApiVersioning(option =>
-            {
-                option.AssumeDefaultVersionWhenUnspecified = true;
-                option.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
-            });
 
             var app = builder.Build();
 
@@ -28,13 +34,13 @@ namespace DotNet_Core_Prep_Samples
                 app.UseSwaggerUI();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
             app.MapControllers();
 
+            await app.UseOcelot();
             app.Run();
         }
     }

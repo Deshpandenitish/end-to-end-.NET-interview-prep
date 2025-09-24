@@ -113,14 +113,6 @@ namespace OopsTrials
     #endregion
     #endregion
 
-    #region Scalable and Efficient Linq Filter Using Expression Predicates
-
-    #endregion
-
-    #region Scalable and Efficient Linq Filter using Dictionary
-
-    #endregion
-
     internal class Program
     {
         static void RunQueries(string syntax)
@@ -385,6 +377,7 @@ namespace OopsTrials
             var syntax = Console.ReadLine();
             RunQueries(syntax ?? "N");
 
+            #region Prdicate Query Filter
             Console.Write("Run Prdicate Query Filter(Y/N) :");
             var lstEmployees = new List<Employees> {
                 new Employees { EmpId = 101, EmployeeName = "Harish", DeptId = 1, salary = 100000, Skills = new List<string> { "Communication","Recruitment" } },
@@ -404,6 +397,7 @@ namespace OopsTrials
                 Console.WriteLine($"Name :{employee.EmployeeName}, Salary :{employee.salary}, " +
                     $"Skills :{string.Join(",", employee.Skills)}");
             }
+            #endregion
         }
     }
 }

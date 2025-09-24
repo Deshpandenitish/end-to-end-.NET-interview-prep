@@ -3,15 +3,11 @@ using System.Collections.Generic;
 
 namespace DotNet_Core_Prep_Samples.Entities;
 
-public partial class Employee
+public partial class Project
 {
-    public int EmpId { get; set; }
+    public int ProjId { get; set; }
 
-    public string? EmpName { get; set; }
-
-    public decimal? Salary { get; set; }
-
-    public int? Age { get; set; }
+    public string? ProjName { get; set; }
 
     public int? DeptId { get; set; }
 
