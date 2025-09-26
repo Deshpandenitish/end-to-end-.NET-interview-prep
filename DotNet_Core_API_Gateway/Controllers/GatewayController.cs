@@ -1,5 +1,6 @@
 ﻿using DotNet_Core_API_Gateway.GatewayInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using DotNet_Core_API_Gateway.Constants;
 
 namespace DotNet_Core_API_Gateway.Controllers
 {
@@ -16,7 +17,7 @@ namespace DotNet_Core_API_Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await _gatewayService.GetAllAsync("", "employees");
+            var result = await _gatewayService.GetAllAsync(ApiRouteConstants.GetAllEmployees, "employees");
             return Ok(result);
         }
     }
