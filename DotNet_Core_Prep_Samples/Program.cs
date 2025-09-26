@@ -1,3 +1,4 @@
+using DotNet_Core_Prep_Samples.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNet_Core_Prep_Samples
@@ -10,6 +11,10 @@ namespace DotNet_Core_Prep_Samples
 
             // Add services to the container.
             builder.Services.AddControllers();
+
+            builder.Services.AddDbContext<TrialsContext>(x => x.UseSqlServer
+            (builder.Configuration.GetConnectionString("DefaultConnection")));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

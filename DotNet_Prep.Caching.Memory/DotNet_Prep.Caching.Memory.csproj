@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<PackageId>DotNet_Prep.Caching.Memory</PackageId>
-	<Version>1.0.0</Version>
+	<Version>1.0.2</Version>
 	<Authors>Nitish</Authors>
 	<Description>Reusable caching library with MemoryCache for Gateway and APIs</Description>
 	<Company>Trials</Company>

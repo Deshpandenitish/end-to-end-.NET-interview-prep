@@ -1,3 +1,5 @@
+using DotNet_Core_API_Gateway.GatewayInterfaces;
+using DotNet_Core_API_Gateway.Services;
 using DotNet_Prep.Caching.Memory.Extensions;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -10,7 +12,7 @@ namespace DotNet_Core_API_Gateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            #region Register Ocelot
+            #region Register Ocelot and call In_Memory Cache
             // Add services to the container.
             builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
             // Register Ocelot
@@ -18,6 +20,7 @@ namespace DotNet_Core_API_Gateway
 
             //Register Memory Cache
             builder.Services.AddMemoryCacheService();
+            builder.Services.AddSingleton(typeof(IGatewayService<>), typeof(GatewayService<>));
             #endregion
 
             builder.Services.AddControllers();
