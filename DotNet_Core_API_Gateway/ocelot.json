@@ -2,14 +2,14 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/Employees",
-      "DownstreamScheme": "",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5001
+          "Port": 5041
         }
       ],
-      "UpstreamPathTemplate": "/gateway/Employees",
+      "UpstreamPathTemplate": "/gateway/EmployeeGateway",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ],

@@ -2,6 +2,6 @@
 {
     public interface IGatewayService<T>
     {
-        Task<List<T>> GetAllAsync(string endPoint, string cacheKey, TimeSpan? cacheDuration = null);
+        Task<IEnumerable<T>> GetAllAsync(string endPoint, string cacheKey, TimeSpan? cacheDuration = null);
     }
 }

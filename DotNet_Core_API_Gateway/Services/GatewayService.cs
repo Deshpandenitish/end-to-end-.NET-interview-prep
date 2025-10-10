@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
-using DotNet_Prep.Caching.Memory.Extensions;
-using DotNet_Core_API_Gateway.GatewayInterfaces;
+﻿using DotNet_Core_API_Gateway.GatewayInterfaces;
 using DotNet_Prep.Caching.Memory.MemoryCacheInterfaces;
+using System.Text.Json;
 
 namespace DotNet_Core_API_Gateway.Services
 {
@@ -9,12 +8,12 @@ namespace DotNet_Core_API_Gateway.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ICacheService _cacheService;
-        public GatewayService(HttpClient httpClient, ICacheService cacheService)
+        public GatewayService(IHttpClientFactory httpClientFactory, ICacheService cacheService)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient();
             _cacheService = cacheService;
         }
-        public async Task<List<T>> GetAllAsync(string endPoint, string cacheKey, TimeSpan? cacheDuration)
+        public async Task<IEnumerable<T>> GetAllAsync(string endPoint, string cacheKey, TimeSpan? cacheDuration)
         {
             var cached = _cacheService.Get<List<T>>(cacheKey);
             if (cached != null) { return cached; }
@@ -24,10 +23,12 @@ namespace DotNet_Core_API_Gateway.Services
                 if (!response.IsSuccessStatusCode) return new List<T>();
                 else
                 {
-                    var result = await response.Content.ReadFromJsonAsync<List<T>>();
-                    if (result != null)
-                        _cacheService.Set(cacheKey, result, cacheDuration ?? TimeSpan.FromMinutes(5));
-                    return result ?? new List<T>();
+                    var rawData = JsonSerializer.Deserialize<IEnumerable<T>>(
+                                await response.Content.ReadAsStringAsync(),
+                                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    if (rawData is not null)
+                        _cacheService.Set(cacheKey, rawData, cacheDuration ?? TimeSpan.FromMinutes(5));
+                    return rawData ?? new List<T>();
                 }
             }
         }

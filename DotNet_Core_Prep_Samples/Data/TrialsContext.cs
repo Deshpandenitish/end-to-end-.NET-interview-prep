@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DotNet_Core_Prep_Samples.Entities;
+﻿using DotNet_Core_Prep_Samples.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNet_Core_Prep_Samples.Data;

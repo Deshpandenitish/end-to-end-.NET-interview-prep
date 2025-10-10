@@ -1,3 +1,4 @@
+using DotNet_Core_Prep_Samples.Configs;
 using DotNet_Core_Prep_Samples.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,8 @@ namespace DotNet_Core_Prep_Samples
 
             builder.Services.AddDbContext<TrialsContext>(x => x.UseSqlServer
             (builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            InjectService.InjectServices(builder.Services);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -40,6 +43,8 @@ namespace DotNet_Core_Prep_Samples
 
             app.MapControllers();
 
+            //Health checkup before Gateway hits
+            app.MapGet("/health", () => Results.Ok("Healthy"));
             app.Run();
         }
     }
