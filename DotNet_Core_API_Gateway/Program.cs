@@ -3,6 +3,8 @@ using DotNet_Core_API_Gateway.Helpers;
 using DotNet_Core_API_Gateway.Helpers.Configs;
 using DotNet_Core_API_Gateway.Services;
 using DotNet_Prep.Caching.Memory.Extensions;
+using DotNet_Prep.Throttling.Extensions;
+using DotNet_Prep.Throttling.Service;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -14,15 +16,17 @@ namespace DotNet_Core_API_Gateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            #region Register Ocelot and call In_Memory Cache
             // Add services to the container.
             builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
             // Register Ocelot
             builder.Services.AddOcelot(builder.Configuration);
 
+            //Throttle / Rate Limiting
+            builder.Services.AddMemoryThrottle();
+            builder.Services.Configure<ThrottleSettings>(builder.Configuration.GetSection("ThrottleSettings"));
+
             //Register Memory Cache
             builder.Services.AddMemoryCacheService();
-            #endregion
 
             builder.Services.AddHttpClient();
             builder.Services.AddSingleton(typeof(IGatewayService<>), typeof(GatewayService<>));
@@ -48,6 +52,7 @@ namespace DotNet_Core_API_Gateway
                 app.UseSwaggerUI();
             }
 
+            app.UseThrottling();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

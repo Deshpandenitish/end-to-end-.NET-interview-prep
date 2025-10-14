@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageId>DotNet_Prep.Throttling</PackageId>
+	  <Version>1.0.2</Version>
+	  <Authors>Nitish</Authors>
+	  <Description>Reusable caching library with Throttling for Gateway and APIs</Description>
+	  <Company>Trials</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNet_Prep.Caching.Memory" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+  </ItemGroup>
+
+</Project>
