@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNet_Prep.Throttling.Service
 {
-    public class MemoryThrottleService : IThrottleService
+    public class MemoryThrottleService: IThrottleService
     {
         private readonly IMemoryCache _cache;
         public MemoryThrottleService(IMemoryCache cache) => _cache = cache;
@@ -22,7 +22,7 @@ namespace DotNet_Prep.Throttling.Service
             }
             else
             {
-                _cache.Set(key, 1);
+                _cache.Set(key, 1, TimeSpan.FromMinutes(1));
                 return true;
             }
         }

@@ -1,5 +1,4 @@
 ﻿using DotNet_Core_Prep_Samples.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNet_Core_Prep_Samples.Controllers
